@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext  } from 'react';
+import React, { useEffect, useState, createContext, useRef  } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './component/Navbar';
@@ -14,14 +14,29 @@ export const CartContext = createContext()
 
 function App() {
   const [products, setProducts] = useState([])
-  const getProducts = async () => {
-    await getCartProducts().then(product => {
-      setProducts(product)
-   }) 
-  }
-  useEffect(() => {
-    getProducts()
-  }, [products]) 
+  const effectRan = useRef(false)
+   useEffect(() => {
+      if (effectRan.current === false) {
+         const fetchUsers = async () => {
+            await getCartProducts().then(product => {
+              console.log(product)
+               setProducts(product)
+            })
+         }
+         fetchUsers()
+      }
+      return () => {
+         effectRan.current = true
+      }
+   }, [])
+  //  const getProducts = async () => {
+  //   await getCartProducts().then(product => {
+  //     setProducts(product)
+  //  }) 
+  // }
+  // useEffect(() => {
+  //   getProducts()
+  // }, [products]) 
   const value = { products, setProducts};
   return (
     <BrowserRouter>

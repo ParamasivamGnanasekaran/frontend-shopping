@@ -11,7 +11,7 @@ export const getProducts = async () => {
 
 
 export const getCartProducts = async () => {
-  return await axios.post("http://localhost:8080/api/products/cartProducts")
+  return await axios.get("http://localhost:8080/api/products/cartProducts")
     .then((response) => {
       return response.data;
     }).catch((err) => {

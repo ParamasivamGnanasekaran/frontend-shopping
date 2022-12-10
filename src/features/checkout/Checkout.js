@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import CheckoutCard from '../../component/CheckoutCard';
 import { removeCheckOutFromCart } from '../../services/cart';
 import { reduceProducts } from '../../services/products';
 import { toast } from 'react-custom-alert';
+import { CartContext } from '../../App';
 
 export default function Checkout() {
+  const {setProducts} = useContext(CartContext)
   let location = useLocation();
   const navigate = useNavigate();
   const products = location.state.checkOutProducts
@@ -20,6 +22,7 @@ export default function Checkout() {
     if (products) {
       await reduceProducts(products).then(async (data) => {
         await removeCheckOutFromCart(products).then(remove =>{ 
+          setProducts(remove)
          toast.success("Payment Sucessfull!!");
           navigate('/', { replace: true })
         })
