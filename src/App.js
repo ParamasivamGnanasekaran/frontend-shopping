@@ -8,25 +8,31 @@ import Home from './features/home/Home';
 import {getUser} from './services/user';
 import { ToastContainer } from 'react-custom-alert';
 import 'react-custom-alert/dist/index.css';
+import { getCartProducts } from './services/products';
 
-export const UserContext = createContext()
+export const CartContext = createContext()
 
 function App() {
-  const [user, setUser] = useState({})
-  const value = { user, setUser };
-  useEffect(()=>{
-    getUser().then((user) => setUser(user));
-    },[])
+  const [products, setProducts] = useState([])
+  const getProducts = async () => {
+    await getCartProducts().then(product => {
+      setProducts(product)
+   }) 
+  }
+  useEffect(() => {
+    getProducts()
+  }, [products]) 
+  const value = { products, setProducts};
   return (
     <BrowserRouter>
-      <UserContext.Provider value={value}>
+      <CartContext.Provider value={value}>
     <Navbar/>
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/checkout" element={<Checkout/>} />
       </Routes>
-      </UserContext.Provider>
+      </CartContext.Provider>
       <ToastContainer floatingTime={2000} />
     </BrowserRouter>
   );

@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import CartCard from '../../component/CartCard';
 import { Section } from '../../component/section';
 import { removeFromCart, updateQuantity } from '../../services/cart';
 import { getCartProducts } from '../../services/products';
 import { toast } from 'react-custom-alert';
+import { CartContext } from '../../App';
 
-export default function Cart(props) {
-   const [products, setProducts] = useState([])
+export default function Cart() {
+   const {products, setProducts} = useContext(CartContext)
    const [search, setSearch] = useState([])
    const effectRan = useRef(false)
    const childRef = useRef();
@@ -83,9 +84,11 @@ export default function Cart(props) {
                }
             }).map((product) =>
                <CartCard key={product.id} product={product} callCartDelete={(productId) => callCartDelete(productId)} callCartAdd={(amount, productId) => callCartAdd(amount, productId)} callCheck={(isChecked, product) => callCheck(isChecked, product)} />
-            ) : <div style={{ color: 'red', display: 'flex', justifyContent: "center", alignItems: 'center', height: '525px' }}>
+            ) : 
+            <div style={{ color: 'red', display: 'flex', justifyContent: "center", alignItems: 'center', height: '525px' }}>
                <h1>Cart Products Are Not avaliable</h1>
-            </div>}
+            </div>
+            }
          </div>
       </div>
    );

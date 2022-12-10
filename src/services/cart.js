@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const addProductsToCart = (product) => {
-  return axios.put("http://localhost:8080/api/cart/1", { "productId": product.id })
+export const addProductsToCart = (product, amount) => {
+  return axios.put("http://localhost:8080/api/cart/1", { "productId": product.id , "amount":amount})
     .then((response) => {
       return response.data
     }).catch((err) => {
