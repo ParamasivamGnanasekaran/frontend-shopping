@@ -24,7 +24,7 @@ export default function Navbar() {
                 <NavLink className="nav-link" to="/cart" style={{ margin: "1rem", textDecoration: 'none', color: 'white' }}>
                  <span className="fa-layers fa-2x fa-fw">
                     <FontAwesomeIcon icon={faShoppingCart} />
-                     <span  className='fa-layers-counter fs-1'>{products.length}</span>
+                     <span  className='fa-layers-counter fs-1'>{products ?products.length: 0}</span>
                   </span>
                   </NavLink>
               </li>
