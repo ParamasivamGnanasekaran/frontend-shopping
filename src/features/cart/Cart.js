@@ -42,7 +42,10 @@ export default function Cart() {
    const callCartAdd = async (amount, productId) => {
       let data = await updateQuantity(amount, productId).then(data => {
          setProducts(data.products)
-         setCheckOutProducts(data.products)
+         checkOutProducts.map(checkOutProduct =>{
+            if(checkOutProduct.id === productId)
+            checkOutProduct.quantity = checkOutProduct.quantity + amount
+         })
          childRef.current.activateFocus(data.products)
          return data.carts.quantity
       })
