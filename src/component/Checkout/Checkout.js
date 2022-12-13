@@ -32,7 +32,7 @@ export default function Checkout() {
    *
    */
   const reduceProduct = async () => {
-    if (products) {
+    if (products.length !== 0) {
       await reduceProducts(products).then(async (data) => {
         setCartProducts((cartProducts) => {
           return cartProducts.filter(
